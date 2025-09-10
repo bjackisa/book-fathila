@@ -1,11 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CalendarDaysIcon,
-} from "@heroicons/react/24/outline";
 
 export const Calendar = ({
   service,
@@ -88,23 +83,23 @@ export const Calendar = ({
       {isLoading ? (
         <p className="text-center">Loading availability...</p>
       ) : (
-        <div className="p-4 rounded-lg bg-white dark:bg-neutral-900 shadow-lg ring-1 ring-brand-pink/20">
+        <div className="p-4 rounded-lg bg-white dark:bg-neutral-900">
           <div className="flex justify-between items-center mb-4">
             <button
               onClick={handlePrevMonth}
-              className="p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white disabled:opacity-50 transition-transform hover:-translate-x-1"
+              className="p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white disabled:opacity-50"
               disabled={currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() === today.getMonth()}
             >
-              <ChevronLeftIcon className="w-5 h-5" />
+              &lt;
             </button>
             <h3 className="text-xl font-semibold">
               {currentDate.toLocaleString("default", { month: "long", year: "numeric" })}
             </h3>
             <button
               onClick={handleNextMonth}
-              className="p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white transition-transform hover:translate-x-1"
+              className="p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white"
             >
-              <ChevronRightIcon className="w-5 h-5" />
+              &gt;
             </button>
           </div>
           <div className="grid grid-cols-7 gap-2 text-center">
@@ -131,11 +126,11 @@ export const Calendar = ({
                   key={day}
                   onClick={() => handleDateClick(day)}
                   disabled={!hasSlots || isPast || isSunday}
-                  className={`p-2 rounded-full transition-colors duration-200 ${
+                  className={`p-2 rounded-full ${
                     isSelected
                       ? "bg-brand-pink text-white"
                       : hasSlots && !isPast && !isSunday
-                      ? "border border-brand-pink hover:bg-brand-pink hover:text-white hover:shadow"
+                      ? "border border-brand-pink hover:bg-brand-pink hover:text-white"
                       : "text-gray-400 cursor-not-allowed"
                   }`}
                 >
@@ -158,7 +153,7 @@ export const Calendar = ({
                 <button
                   key={time}
                   onClick={() => setSelectedTime(time)}
-                  className={`p-2 rounded-lg transition-colors duration-200 ${
+                  className={`p-2 rounded-lg ${
                     selectedTime === time
                       ? "bg-brand-pink text-white"
                       : "border border-brand-pink hover:bg-brand-pink hover:text-white"
@@ -176,12 +171,9 @@ export const Calendar = ({
 
       {selectedTime && (
         <button
-          onClick={() =>
-            onBook({ date: selectedDate!.toISOString().split("T")[0], time: selectedTime })
-          }
-          className="w-full mt-6 p-3 bg-brand-pink text-white font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-brand-pink/90 transition-colors"
+          onClick={() => onBook({ date: selectedDate!.toISOString().split("T")[0], time: selectedTime })}
+          className="w-full mt-6 p-3 bg-brand-pink text-white font-bold rounded-lg hover:bg-opacity-90"
         >
-          <CalendarDaysIcon className="w-5 h-5" />
           Book Now for {selectedTime}
         </button>
       )}
