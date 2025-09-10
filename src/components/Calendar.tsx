@@ -82,7 +82,7 @@ export const Calendar = ({
       {isLoading ? (
         <p className="text-center">Loading availability...</p>
       ) : (
-        <div className="card space-y-4">
+        <div className="card space-y-4 p-6">
           <div className="flex justify-between items-center">
             <button
               onClick={handlePrevMonth}
@@ -126,11 +126,11 @@ export const Calendar = ({
                   key={day}
                   onClick={() => handleDateClick(day)}
                   disabled={!hasSlots || isPast || isSunday}
-                  className={`h-9 w-9 rounded-full mx-auto flex items-center justify-center transition-colors ${
+                  className={`aspect-square w-full flex items-center justify-center rounded-md transition-all ${
                     isSelected
                       ? "bg-brand-pink text-white"
                       : hasSlots && !isPast && !isSunday
-                      ? "border border-brand-pink hover:bg-brand-pink hover:text-white"
+                      ? "border border-brand-pink/40 bg-white/60 dark:bg-neutral-800/60 backdrop-blur hover:bg-brand-pink hover:text-white"
                       : "text-gray-400 cursor-not-allowed"
                   } ${isToday ? "ring-2 ring-brand-pink" : ""}`}
                 >
@@ -151,10 +151,10 @@ export const Calendar = ({
                 <button
                   key={time}
                   onClick={() => setSelectedTime(time)}
-                  className={`p-2 rounded-md flex items-center justify-center gap-1 transition-colors ${
+                  className={`px-3 py-2 rounded-md flex items-center justify-center gap-1 transition-all ${
                     selectedTime === time
-                      ? "bg-brand-pink text-white"
-                      : "border border-brand-pink hover:bg-brand-pink hover:text-white"
+                      ? "bg-brand-pink text-white shadow"
+                      : "border border-brand-pink/40 bg-white/60 dark:bg-neutral-800/60 backdrop-blur hover:bg-brand-pink hover:text-white"
                   }`}
                 >
                   <Clock className="w-4 h-4" />

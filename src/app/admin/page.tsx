@@ -44,7 +44,7 @@ export default function AdminPage() {
         <h1 className="text-xl font-bold text-center mb-4 flex items-center justify-center gap-2">
           <Shield className="w-5 h-5 text-brand-pink" /> Admin Panel
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="date" className="block text-sm font-medium mb-1">
               Date
@@ -56,7 +56,7 @@ export default function AdminPage() {
                 id="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm pl-9"
+                className="input-primary pl-9"
                 required
               />
             </div>
@@ -72,7 +72,7 @@ export default function AdminPage() {
                 id="time"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
-                className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm pl-9"
+                className="input-primary pl-9"
                 required
               />
             </div>
