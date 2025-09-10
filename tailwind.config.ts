@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import forms from "@tailwindcss/forms";
 
 const config: Config = {
   darkMode: "class",
@@ -12,6 +13,9 @@ const config: Config = {
       colors: {
         "brand-pink": "#E52A7A",
       },
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -19,6 +23,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [forms],
 };
 export default config;

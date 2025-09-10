@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
 
 export const Calendar = ({
   service,
@@ -76,35 +77,33 @@ export const Calendar = ({
   const availableSlots = filterSlots(getAvailableSlotsForDate(selectedDate));
 
   return (
-    <div className="w-full max-w-lg mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-6">
-        Select a date and time for {service}
-      </h2>
+    <div className="w-full max-w-lg mx-auto space-y-6">
+      <h2 className="text-2xl font-bold text-center">Select a date and time for {service}</h2>
       {isLoading ? (
         <p className="text-center">Loading availability...</p>
       ) : (
-        <div className="p-4 rounded-lg bg-white dark:bg-neutral-900">
-          <div className="flex justify-between items-center mb-4">
+        <div className="card space-y-4">
+          <div className="flex justify-between items-center">
             <button
               onClick={handlePrevMonth}
               className="p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white disabled:opacity-50"
               disabled={currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() === today.getMonth()}
             >
-              &lt;
+              <ChevronLeft className="w-4 h-4" />
             </button>
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-lg font-semibold">
               {currentDate.toLocaleString("default", { month: "long", year: "numeric" })}
             </h3>
             <button
               onClick={handleNextMonth}
               className="p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white"
             >
-              &gt;
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
-          <div className="grid grid-cols-7 gap-2 text-center">
+          <div className="grid grid-cols-7 gap-2 text-center text-xs sm:text-sm">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-              <div key={day} className="font-semibold text-sm">
+              <div key={day} className="font-medium">
                 {day}
               </div>
             ))}
@@ -120,19 +119,20 @@ export const Calendar = ({
               const isSelected = selectedDate?.toDateString() === date.toDateString();
               const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
               const isSunday = date.getDay() === 0;
+              const isToday = date.toDateString() === today.toDateString();
 
               return (
                 <button
                   key={day}
                   onClick={() => handleDateClick(day)}
                   disabled={!hasSlots || isPast || isSunday}
-                  className={`p-2 rounded-full ${
+                  className={`h-9 w-9 rounded-full mx-auto flex items-center justify-center transition-colors ${
                     isSelected
                       ? "bg-brand-pink text-white"
                       : hasSlots && !isPast && !isSunday
                       ? "border border-brand-pink hover:bg-brand-pink hover:text-white"
                       : "text-gray-400 cursor-not-allowed"
-                  }`}
+                  } ${isToday ? "ring-2 ring-brand-pink" : ""}`}
                 >
                   {day}
                 </button>
@@ -143,23 +143,22 @@ export const Calendar = ({
       )}
 
       {selectedDate && (
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold text-center">
-            Available slots for {selectedDate.toLocaleDateString()}
-          </h3>
-          <div className="grid grid-cols-3 gap-2 mt-4">
+        <div>
+          <h3 className="text-lg font-semibold text-center">Available slots for {selectedDate.toLocaleDateString()}</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-4 text-sm">
             {availableSlots.length > 0 ? (
               availableSlots.map((time) => (
                 <button
                   key={time}
                   onClick={() => setSelectedTime(time)}
-                  className={`p-2 rounded-lg ${
+                  className={`p-2 rounded-md flex items-center justify-center gap-1 transition-colors ${
                     selectedTime === time
                       ? "bg-brand-pink text-white"
                       : "border border-brand-pink hover:bg-brand-pink hover:text-white"
                   }`}
                 >
-                  {time}
+                  <Clock className="w-4 h-4" />
+                  <span>{time}</span>
                 </button>
               ))
             ) : (
@@ -172,7 +171,7 @@ export const Calendar = ({
       {selectedTime && (
         <button
           onClick={() => onBook({ date: selectedDate!.toISOString().split("T")[0], time: selectedTime })}
-          className="w-full mt-6 p-3 bg-brand-pink text-white font-bold rounded-lg hover:bg-opacity-90"
+          className="w-full btn-primary"
         >
           Book Now for {selectedTime}
         </button>

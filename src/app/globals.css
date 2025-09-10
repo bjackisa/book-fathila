@@ -12,9 +12,18 @@
   --foreground: #f9f9f9;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: sans-serif;
-  transition: background 0.3s, color 0.3s;
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-white via-rose-50 to-pink-100 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800 text-gray-800 dark:text-gray-100 font-sans transition-colors;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white dark:bg-neutral-900 rounded-lg shadow-sm p-5;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-brand-pink text-white rounded-lg hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
 }
