@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { UserDetailsForm } from "@/components/UserDetailsForm";
 import { Calendar } from "@/components/Calendar";
 
@@ -53,8 +52,9 @@ export default function Home() {
 
       setStep("confirmed");
 
-    } catch (error: any) {
-      alert(`Booking failed: ${error.message}`);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      alert(`Booking failed: ${message}`);
       // Optional: reset the state to allow user to try again
       setStep("calendar");
     }
@@ -69,14 +69,14 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-8">
-      <header className="flex flex-col items-center text-center mb-12">
-        <Image
-          src="/logo.png"
-          alt="Fathila Nanozi"
-          width={100}
-          height={100}
-          className="rounded-full mb-4"
-        />
+        <header className="flex flex-col items-center text-center mb-12">
+          <img
+            src="https://fathilananozi.com/storage/fathila-widget-pic-1.png"
+            alt="Fathila Nanozi"
+            width={100}
+            height={100}
+            className="rounded-full mb-4"
+          />
         <h1 className="text-4xl font-bold text-white">Book Fathila</h1>
         {step === "service" && (
           <p className="text-lg text-gray-300 mt-2">
