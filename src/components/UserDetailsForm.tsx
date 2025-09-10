@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 
 export const UserDetailsForm = ({
   service,
@@ -13,7 +13,7 @@ export const UserDetailsForm = ({
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (name && phone) {
       onSubmit({ name, phone, email });

@@ -13,29 +13,38 @@ export async function POST(request: Request) {
 
     // --- Validation ---
     // Read availability data
-    let availability = { slots: {} };
+    let availability: { slots: Record<string, string[]> } = { slots: {} };
     if (fs.existsSync(availabilityPath)) {
       const availabilityData = fs.readFileSync(availabilityPath, 'utf-8');
       availability = JSON.parse(availabilityData);
     }
 
     // Check if the slot is generally available
-    const isSlotAvailable = (availability.slots as any)[date]?.includes(time);
+    const isSlotAvailable = availability.slots[date]?.includes(time);
     if (!isSlotAvailable) {
       return NextResponse.json({ message: 'This time slot is not available.' }, { status: 400 });
     }
 
     // Read current bookings
-    let bookings: any[] = [];
+    interface BookingEntry {
+      service?: string;
+      user?: { name: string; phone: string; email?: string };
+      booking: { date: string; time: string };
+      status?: string;
+    }
+
+    let bookings: BookingEntry[] = [];
     if (fs.existsSync(bookingsPath)) {
       const bookingsData = fs.readFileSync(bookingsPath, 'utf-8');
-      if(bookingsData) {
+      if (bookingsData) {
         bookings = JSON.parse(bookingsData);
       }
     }
 
-    // Check if the slot is already booked
-    const isSlotBooked = bookings.some(b => b.booking.date === date && b.booking.time === time);
+    // Check if the slot is already booked or blocked
+    const isSlotBooked = bookings.some(
+      (b) => b.booking.date === date && b.booking.time === time
+    );
     if (isSlotBooked) {
       return NextResponse.json({ message: 'This time slot has already been booked.' }, { status: 409 }); // 409 Conflict
     }
