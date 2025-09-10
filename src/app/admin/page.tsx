@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { ShieldCheckIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/solid";
 
 export default function AdminPage() {
   const [date, setDate] = useState("");
@@ -30,51 +31,59 @@ export default function AdminPage() {
     }
   };
 
-  return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-8">
-      <img
-        src="https://fathilananozi.com/storage/fathila-widget-pic-1.png"
-        alt="Fathila Nanozi"
-        width={80}
-        height={80}
-        className="rounded-full mb-4"
-      />
-      <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-sm">
-        <div>
-          <label htmlFor="date" className="block text-sm font-medium mb-1">
-            Date
-          </label>
-          <input
-            type="date"
-            id="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="mt-1 w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-brand-pink focus:border-brand-pink"
-            required
-          />
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen p-8">
+        <img
+          src="https://fathilananozi.com/storage/fathila-widget-pic-1.png"
+          alt="Fathila Nanozi"
+          width={80}
+          height={80}
+          className="rounded-full mb-4"
+        />
+        <div className="card w-full max-w-sm">
+          <div className="flex items-center justify-center mb-4">
+            <ShieldCheckIcon className="w-8 h-8 text-brand-pink mr-2" />
+            <h1 className="text-3xl font-bold">Admin Panel</h1>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="date" className="block text-sm font-medium mb-1">
+                Date
+              </label>
+              <div className="relative mt-1">
+                <CalendarIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
+                <input
+                  type="date"
+                  id="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  className="block w-full pl-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="time" className="block text-sm font-medium mb-1">
+                Time
+              </label>
+              <div className="relative mt-1">
+                <ClockIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
+                <input
+                  type="time"
+                  id="time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                  className="block w-full pl-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
+                  required
+                />
+              </div>
+            </div>
+            <button type="submit" className="w-full btn-primary">
+              Block Slot
+            </button>
+          </form>
+          {message && <p className="mt-4 text-center">{message}</p>}
         </div>
-        <div>
-          <label htmlFor="time" className="block text-sm font-medium mb-1">
-            Time
-          </label>
-          <input
-            type="time"
-            id="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            className="mt-1 w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-brand-pink focus:border-brand-pink"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full p-3 bg-brand-pink text-white font-bold rounded-lg hover:bg-opacity-90"
-        >
-          Block Slot
-        </button>
-      </form>
-      {message && <p className="mt-4 text-center">{message}</p>}
-    </main>
-  );
+      </main>
+    );
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -9,14 +10,16 @@ export const metadata: Metadata = {
   },
 };
 
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
+    <html lang="en" className={inter.variable}>
+      <body className="antialiased bg-gradient-to-br from-white via-rose-50 to-pink-100 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800">
         {children}
       </body>
     </html>

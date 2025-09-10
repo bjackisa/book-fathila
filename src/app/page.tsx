@@ -3,12 +3,21 @@
 import { useState, useEffect } from "react";
 import { UserDetailsForm } from "@/components/UserDetailsForm";
 import { Calendar } from "@/components/Calendar";
+import {
+  SunIcon,
+  MoonIcon,
+  SparklesIcon,
+  AcademicCapIcon,
+  ChartBarIcon,
+  BriefcaseIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/solid";
 
 const services = [
-  { name: "Community Impact Planning", duration: 360 },
-  { name: "Startup Advisory Session", duration: 60 },
-  { name: "Skills Development Workshop", duration: 180 },
-  { name: "Growth Strategy Consultation", duration: 60 },
+  { name: "Community Impact Planning", duration: 360, icon: SparklesIcon },
+  { name: "Startup Advisory Session", duration: 60, icon: BriefcaseIcon },
+  { name: "Skills Development Workshop", duration: 180, icon: AcademicCapIcon },
+  { name: "Growth Strategy Consultation", duration: 60, icon: ChartBarIcon },
 ];
 
 export default function Home() {
@@ -79,9 +88,10 @@ export default function Home() {
     <main className="flex flex-col items-center justify-center min-h-screen p-8 transition-colors duration-300">
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="self-end mb-4 p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white transition-colors"
+        className="self-end mb-8 p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white transition-colors"
+        aria-label="Toggle Theme"
       >
-        {theme === "dark" ? "Light" : "Dark"} Mode
+        {theme === "dark" ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
       </button>
       <header className="flex flex-col items-center text-center mb-12">
         <img
@@ -104,9 +114,10 @@ export default function Home() {
               <button
                 key={service.name}
                 onClick={() => handleServiceSelect(service)}
-                className="w-full text-left p-4 rounded-lg border border-brand-pink bg-white dark:bg-neutral-900 hover:bg-brand-pink hover:text-white transition-colors"
+                className="card flex items-center space-x-3 text-left hover:shadow-lg"
               >
-                <h3 className="text-xl font-semibold">{service.name}</h3>
+                <service.icon className="w-6 h-6 text-brand-pink" />
+                <h3 className="text-lg font-semibold">{service.name}</h3>
               </button>
             ))}
           </div>
@@ -121,16 +132,14 @@ export default function Home() {
         )}
 
         {step === "confirmed" && selectedService && (
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-green-500 mb-4">Booking Confirmed!</h2>
-            <p className="text-lg">Thank you, {userDetails.name}.</p>
-            <p>
+          <div className="card text-center">
+            <CheckCircleIcon className="w-12 h-12 text-green-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Booking Confirmed!</h2>
+            <p className="text-lg mb-1">Thank you, {userDetails.name}.</p>
+            <p className="mb-4">
               Your {selectedService.name} session is booked for {bookingDetails.date} at {bookingDetails.time}.
             </p>
-            <button
-              onClick={startOver}
-              className="mt-6 p-3 bg-brand-pink text-white font-bold rounded-lg hover:bg-opacity-90"
-            >
+            <button onClick={startOver} className="btn-primary">
               Book Another Session
             </button>
           </div>
