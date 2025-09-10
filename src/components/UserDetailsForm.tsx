@@ -29,7 +29,7 @@ export const UserDetailsForm = ({
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-300">
+          <label htmlFor="name" className="block text-sm font-medium mb-1">
             Name
           </label>
           <input
@@ -37,12 +37,12 @@ export const UserDetailsForm = ({
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
+            className="mt-1 block w-full p-2 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
             required
           />
         </div>
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-300">
+          <label htmlFor="phone" className="block text-sm font-medium mb-1">
             Phone / WhatsApp Number
           </label>
           <input
@@ -50,12 +50,12 @@ export const UserDetailsForm = ({
             id="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
+            className="mt-1 block w-full p-2 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
             required
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+          <label htmlFor="email" className="block text-sm font-medium mb-1">
             Email (Optional)
           </label>
           <input
@@ -63,7 +63,7 @@ export const UserDetailsForm = ({
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
+            className="mt-1 block w-full p-2 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
           />
         </div>
         <button
