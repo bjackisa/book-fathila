@@ -74,11 +74,11 @@ export const Calendar = ({
     });
   };
 
-    const availableSlots = filterSlots(getAvailableSlotsForDate(selectedDate));
+  const availableSlots = filterSlots(getAvailableSlotsForDate(selectedDate));
 
-    return (
-      <div className="w-full max-w-lg mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-6">Select a date and time for {service}</h2>
+  return (
+    <div className="w-full max-w-lg mx-auto space-y-6">
+      <h2 className="text-2xl font-bold text-center">Select a date and time for {service}</h2>
       {isLoading ? (
         <p className="text-center">Loading availability...</p>
       ) : (
@@ -91,7 +91,7 @@ export const Calendar = ({
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-lg font-semibold">
               {currentDate.toLocaleString("default", { month: "long", year: "numeric" })}
             </h3>
             <button
@@ -101,7 +101,7 @@ export const Calendar = ({
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
-          <div className="grid grid-cols-7 gap-2 text-center text-sm">
+          <div className="grid grid-cols-7 gap-2 text-center text-xs sm:text-sm">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
               <div key={day} className="font-medium">
                 {day}
@@ -143,9 +143,9 @@ export const Calendar = ({
       )}
 
       {selectedDate && (
-        <div className="mt-6">
+        <div>
           <h3 className="text-lg font-semibold text-center">Available slots for {selectedDate.toLocaleDateString()}</h3>
-          <div className="grid grid-cols-3 gap-2 mt-4 text-sm">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-4 text-sm">
             {availableSlots.length > 0 ? (
               availableSlots.map((time) => (
                 <button
@@ -171,7 +171,7 @@ export const Calendar = ({
       {selectedTime && (
         <button
           onClick={() => onBook({ date: selectedDate!.toISOString().split("T")[0], time: selectedTime })}
-          className="w-full mt-6 btn-primary"
+          className="w-full btn-primary"
         >
           Book Now for {selectedTime}
         </button>

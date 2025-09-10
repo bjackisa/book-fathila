@@ -22,12 +22,23 @@ const services = [
 
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  // initialize from system preference / stored value
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
+    const stored = localStorage.getItem("theme");
+    if (stored === "light" || stored === "dark") {
+      setTheme(stored);
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark");
     } else {
-      document.documentElement.classList.remove("dark");
+      setTheme("light");
     }
+  }, []);
+
+  // update document class when theme changes
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   const [step, setStep] = useState("service"); // 'service', 'details', 'calendar', 'confirmed'
@@ -106,14 +117,14 @@ export default function Home() {
       </header>
 
       {step === "service" && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto">
           {services.map((service) => (
             <button
               key={service.name}
               onClick={() => handleServiceSelect(service)}
-              className="card flex items-center gap-2 text-left hover:shadow-md p-4"
+              className="card flex items-center gap-3 p-5 text-left hover:shadow-md transition-shadow"
             >
-              <service.icon className="w-4 h-4 text-brand-pink" />
+              <service.icon className="w-5 h-5 text-brand-pink" />
               <span className="text-sm font-medium">{service.name}</span>
             </button>
           ))}

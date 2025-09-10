@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { User, Phone, Mail } from "lucide-react";
 
 export const UserDetailsForm = ({
   service,
@@ -23,7 +24,7 @@ export const UserDetailsForm = ({
   };
 
   return (
-    <div className="w-full max-w-md card">
+    <div className="w-full max-w-md mx-auto card">
       <h2 className="text-2xl font-bold text-center mb-6">
         Enter your details for {service}
       </h2>
@@ -32,39 +33,48 @@ export const UserDetailsForm = ({
           <label htmlFor="name" className="block text-sm font-medium mb-1">
             Name
           </label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm px-3"
-            required
-          />
+          <div className="relative">
+            <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-pink" />
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm pl-9"
+              required
+            />
+          </div>
         </div>
         <div>
           <label htmlFor="phone" className="block text-sm font-medium mb-1">
             Phone / WhatsApp Number
           </label>
-          <input
-            type="tel"
-            id="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm px-3"
-            required
-          />
+          <div className="relative">
+            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-pink" />
+            <input
+              type="tel"
+              id="phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm pl-9"
+              required
+            />
+          </div>
         </div>
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-1">
             Email (Optional)
           </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm px-3"
-          />
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-pink" />
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm pl-9"
+            />
+          </div>
         </div>
         <button type="submit" className="w-full mt-6 btn-primary">
           Next
