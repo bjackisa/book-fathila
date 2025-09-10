@@ -28,7 +28,7 @@ export const UserDetailsForm = ({
       <h2 className="text-2xl font-bold text-center mb-6">
         Enter your details for {service}
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-1">
             Name
@@ -40,7 +40,7 @@ export const UserDetailsForm = ({
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm pl-9"
+              className="input-primary pl-9"
               required
             />
           </div>
@@ -56,7 +56,7 @@ export const UserDetailsForm = ({
               id="phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm pl-9"
+              className="input-primary pl-9"
               required
             />
           </div>
@@ -72,7 +72,7 @@ export const UserDetailsForm = ({
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm pl-9"
+              className="input-primary pl-9"
             />
           </div>
         </div>

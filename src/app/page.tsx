@@ -116,15 +116,38 @@ export default function Home() {
         {step === "service" && <p className="text-lg">Choose a service to get started</p>}
       </header>
 
+      {step !== "confirmed" && (
+        <div className="max-w-md mx-auto h-2 bg-white/40 dark:bg-neutral-700 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-brand-pink transition-all"
+            style={{
+              width:
+                step === "service"
+                  ? "25%"
+                  : step === "details"
+                  ? "50%"
+                  : step === "calendar"
+                  ? "75%"
+                  : "100%",
+            }}
+          />
+        </div>
+      )}
+
       {step === "service" && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto">
-          {services.map((service) => (
+          {services.map((service, idx) => (
             <button
               key={service.name}
               onClick={() => handleServiceSelect(service)}
-              className="card flex items-center gap-3 p-5 text-left hover:shadow-md transition-shadow"
+              className="card flex flex-col items-start gap-3 p-6 text-left cursor-pointer transition-transform hover:-translate-y-1 hover:shadow-2xl"
             >
-              <service.icon className="w-5 h-5 text-brand-pink" />
+              <div className="flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-pink text-white text-xs font-bold">
+                  {idx + 1}
+                </span>
+                <service.icon className="w-5 h-5 text-brand-pink" />
+              </div>
               <span className="text-sm font-medium">{service.name}</span>
             </button>
           ))}

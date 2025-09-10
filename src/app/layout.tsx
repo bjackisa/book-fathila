@@ -19,9 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="antialiased bg-gradient-to-br from-white via-rose-50 to-pink-100 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800">
-        <div className="min-h-screen flex justify-center px-4">
-          <div className="w-full max-w-2xl py-10">{children}</div>
+      <body className="antialiased min-h-screen">
+        <div className="min-h-screen flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl space-y-8">{children}</div>
         </div>
       </body>
     </html>
