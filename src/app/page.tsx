@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { UserDetailsForm } from "@/components/UserDetailsForm";
 import { Calendar } from "@/components/Calendar";
+import { SunIcon, MoonIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 const services = [
   { name: "Community Impact Planning", duration: 360 },
@@ -80,8 +81,13 @@ export default function Home() {
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         className="self-end mb-4 p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white transition-colors"
+        aria-label="Toggle theme"
       >
-        {theme === "dark" ? "Light" : "Dark"} Mode
+        {theme === "dark" ? (
+          <SunIcon className="w-5 h-5" />
+        ) : (
+          <MoonIcon className="w-5 h-5" />
+        )}
       </button>
       <header className="flex flex-col items-center text-center mb-12">
         <img
@@ -104,9 +110,10 @@ export default function Home() {
               <button
                 key={service.name}
                 onClick={() => handleServiceSelect(service)}
-                className="w-full text-left p-4 rounded-lg border border-brand-pink bg-white dark:bg-neutral-900 hover:bg-brand-pink hover:text-white transition-colors"
+                className="w-full text-left p-4 rounded-lg border border-brand-pink bg-white dark:bg-neutral-900 hover:bg-brand-pink hover:text-white transition-colors flex items-center justify-between"
               >
                 <h3 className="text-xl font-semibold">{service.name}</h3>
+                <ChevronRightIcon className="w-5 h-5" />
               </button>
             ))}
           </div>
