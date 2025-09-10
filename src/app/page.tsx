@@ -114,10 +114,10 @@ export default function Home() {
               <button
                 key={service.name}
                 onClick={() => handleServiceSelect(service)}
-                className="card flex items-center space-x-3 text-left hover:shadow-lg"
+                className="card flex items-center gap-3 text-left hover:shadow-md p-4"
               >
-                <service.icon className="w-6 h-6 text-brand-pink" />
-                <h3 className="text-lg font-semibold">{service.name}</h3>
+                <service.icon className="w-5 h-5 text-brand-pink flex-shrink-0" />
+                <h3 className="text-base font-medium">{service.name}</h3>
               </button>
             ))}
           </div>
@@ -132,14 +132,14 @@ export default function Home() {
         )}
 
         {step === "confirmed" && selectedService && (
-          <div className="card text-center">
-            <CheckCircleIcon className="w-12 h-12 text-green-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold mb-2">Booking Confirmed!</h2>
-            <p className="text-lg mb-1">Thank you, {userDetails.name}.</p>
-            <p className="mb-4">
+          <div className="card text-center space-y-4">
+            <CheckCircleIcon className="w-10 h-10 text-green-500 mx-auto" />
+            <h2 className="text-2xl font-bold">Booking Confirmed!</h2>
+            <p className="text-lg">Thank you, {userDetails.name}.</p>
+            <p>
               Your {selectedService.name} session is booked for {bookingDetails.date} at {bookingDetails.time}.
             </p>
-            <button onClick={startOver} className="btn-primary">
+            <button onClick={startOver} className="btn-primary mt-2">
               Book Another Session
             </button>
           </div>

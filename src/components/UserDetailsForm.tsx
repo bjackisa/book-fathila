@@ -28,19 +28,19 @@ export const UserDetailsForm = ({
       <h2 className="text-2xl font-bold text-center mb-6">
         Enter your details for {service}
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-1">
             Name
           </label>
           <div className="relative mt-1">
-            <UserIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
+            <UserIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
             <input
               type="text"
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="block w-full pl-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
+              className="block w-full pl-9 h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm"
               required
             />
           </div>
@@ -50,13 +50,13 @@ export const UserDetailsForm = ({
             Phone / WhatsApp Number
           </label>
           <div className="relative mt-1">
-            <PhoneIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
+            <PhoneIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
             <input
               type="tel"
               id="phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="block w-full pl-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
+              className="block w-full pl-9 h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm"
               required
             />
           </div>
@@ -66,13 +66,13 @@ export const UserDetailsForm = ({
             Email (Optional)
           </label>
           <div className="relative mt-1">
-            <EnvelopeIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
+            <EnvelopeIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full pl-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
+              className="block w-full pl-9 h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm"
             />
           </div>
         </div>

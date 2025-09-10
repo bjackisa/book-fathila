@@ -20,7 +20,7 @@
 
 @layer components {
   .card {
-    @apply bg-white dark:bg-neutral-900 rounded-xl shadow-md p-6 transition-transform hover:scale-[1.02];
+    @apply bg-white dark:bg-neutral-900 rounded-lg shadow-sm p-5;
   }
 
   .btn-primary {

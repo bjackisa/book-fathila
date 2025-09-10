@@ -42,22 +42,22 @@ export default function AdminPage() {
         />
         <div className="card w-full max-w-sm">
           <div className="flex items-center justify-center mb-4">
-            <ShieldCheckIcon className="w-8 h-8 text-brand-pink mr-2" />
-            <h1 className="text-3xl font-bold">Admin Panel</h1>
+            <ShieldCheckIcon className="w-6 h-6 text-brand-pink mr-2" />
+            <h1 className="text-2xl font-bold">Admin Panel</h1>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label htmlFor="date" className="block text-sm font-medium mb-1">
                 Date
               </label>
               <div className="relative mt-1">
-                <CalendarIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
+                <CalendarIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
                 <input
                   type="date"
                   id="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="block w-full pl-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
+                  className="block w-full pl-9 h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm"
                   required
                 />
               </div>
@@ -67,13 +67,13 @@ export default function AdminPage() {
                 Time
               </label>
               <div className="relative mt-1">
-                <ClockIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
+                <ClockIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-brand-pink" />
                 <input
                   type="time"
                   id="time"
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
-                  className="block w-full pl-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink sm:text-sm"
+                  className="block w-full pl-9 h-10 rounded-md border border-brand-pink bg-white dark:bg-neutral-900 focus:ring-brand-pink focus:border-brand-pink text-sm"
                   required
                 />
               </div>
