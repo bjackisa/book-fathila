@@ -20,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="antialiased bg-gradient-to-br from-white via-rose-50 to-pink-100 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800">
-        {children}
+        <div className="min-h-screen flex justify-center px-4">
+          <div className="w-full max-w-2xl py-10">{children}</div>
+        </div>
       </body>
     </html>
   );

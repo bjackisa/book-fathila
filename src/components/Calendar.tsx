@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronLeftIcon, ChevronRightIcon, ClockIcon } from "@heroicons/react/24/solid";
+import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
 
 export const Calendar = ({
   service,
@@ -89,7 +89,7 @@ export const Calendar = ({
               className="p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white disabled:opacity-50"
               disabled={currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() === today.getMonth()}
             >
-              <ChevronLeftIcon className="w-4 h-4" />
+              <ChevronLeft className="w-4 h-4" />
             </button>
             <h3 className="text-xl font-semibold">
               {currentDate.toLocaleString("default", { month: "long", year: "numeric" })}
@@ -98,7 +98,7 @@ export const Calendar = ({
               onClick={handleNextMonth}
               className="p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white"
             >
-              <ChevronRightIcon className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
           <div className="grid grid-cols-7 gap-2 text-center text-sm">
@@ -157,7 +157,7 @@ export const Calendar = ({
                       : "border border-brand-pink hover:bg-brand-pink hover:text-white"
                   }`}
                 >
-                  <ClockIcon className="w-4 h-4" />
+                  <Clock className="w-4 h-4" />
                   <span>{time}</span>
                 </button>
               ))

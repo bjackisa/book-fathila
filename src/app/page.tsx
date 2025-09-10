@@ -4,20 +4,20 @@ import { useState, useEffect } from "react";
 import { UserDetailsForm } from "@/components/UserDetailsForm";
 import { Calendar } from "@/components/Calendar";
 import {
-  SunIcon,
-  MoonIcon,
-  SparklesIcon,
-  AcademicCapIcon,
-  ChartBarIcon,
-  BriefcaseIcon,
-  CheckCircleIcon,
-} from "@heroicons/react/24/solid";
+  Sun,
+  Moon,
+  Sparkles,
+  GraduationCap,
+  BarChart3,
+  Briefcase,
+  CheckCircle,
+} from "lucide-react";
 
 const services = [
-  { name: "Community Impact Planning", duration: 360, icon: SparklesIcon },
-  { name: "Startup Advisory Session", duration: 60, icon: BriefcaseIcon },
-  { name: "Skills Development Workshop", duration: 180, icon: AcademicCapIcon },
-  { name: "Growth Strategy Consultation", duration: 60, icon: ChartBarIcon },
+  { name: "Community Impact Planning", duration: 360, icon: Sparkles },
+  { name: "Startup Advisory Session", duration: 60, icon: Briefcase },
+  { name: "Skills Development Workshop", duration: 180, icon: GraduationCap },
+  { name: "Growth Strategy Consultation", duration: 60, icon: BarChart3 },
 ];
 
 export default function Home() {
@@ -85,66 +85,62 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-8 transition-colors duration-300">
+    <main className="space-y-10">
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="self-end mb-8 p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white transition-colors"
+        className="ml-auto mb-4 p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white transition-colors"
         aria-label="Toggle Theme"
       >
-        {theme === "dark" ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+        {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
       </button>
-      <header className="flex flex-col items-center text-center mb-12">
+      <header className="flex flex-col items-center text-center space-y-3">
         <img
           src="https://fathilananozi.com/storage/fathila-widget-pic-1.png"
           alt="Fathila Nanozi"
           width={100}
           height={100}
-          className="rounded-full mb-4"
+          className="rounded-full"
         />
-        <h1 className="text-4xl font-bold">Book Fathila</h1>
-        {step === "service" && (
-          <p className="text-lg mt-2">Choose a service to get started</p>
-        )}
+        <h1 className="text-3xl font-bold">Book Fathila</h1>
+        {step === "service" && <p className="text-lg">Choose a service to get started</p>}
       </header>
 
-      <section className="w-full max-w-lg">
-        {step === "service" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {services.map((service) => (
-              <button
-                key={service.name}
-                onClick={() => handleServiceSelect(service)}
-                className="card flex items-center gap-3 text-left hover:shadow-md p-4"
-              >
-                <service.icon className="w-5 h-5 text-brand-pink flex-shrink-0" />
-                <h3 className="text-base font-medium">{service.name}</h3>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {step === "details" && selectedService && (
-          <UserDetailsForm service={selectedService.name} onSubmit={handleDetailsSubmit} />
-        )}
-
-        {step === "calendar" && selectedService && (
-          <Calendar service={selectedService.name} duration={selectedService.duration} onBook={handleBooking} />
-        )}
-
-        {step === "confirmed" && selectedService && (
-          <div className="card text-center space-y-4">
-            <CheckCircleIcon className="w-10 h-10 text-green-500 mx-auto" />
-            <h2 className="text-2xl font-bold">Booking Confirmed!</h2>
-            <p className="text-lg">Thank you, {userDetails.name}.</p>
-            <p>
-              Your {selectedService.name} session is booked for {bookingDetails.date} at {bookingDetails.time}.
-            </p>
-            <button onClick={startOver} className="btn-primary mt-2">
-              Book Another Session
+      {step === "service" && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {services.map((service) => (
+            <button
+              key={service.name}
+              onClick={() => handleServiceSelect(service)}
+              className="card flex items-center gap-2 text-left hover:shadow-md p-4"
+            >
+              <service.icon className="w-4 h-4 text-brand-pink" />
+              <span className="text-sm font-medium">{service.name}</span>
             </button>
-          </div>
-        )}
-      </section>
+          ))}
+        </div>
+      )}
+
+      {step === "details" && selectedService && (
+        <UserDetailsForm service={selectedService.name} onSubmit={handleDetailsSubmit} />
+      )}
+
+      {step === "calendar" && selectedService && (
+        <Calendar service={selectedService.name} duration={selectedService.duration} onBook={handleBooking} />
+      )}
+
+      {step === "confirmed" && selectedService && (
+        <div className="card text-center space-y-4">
+          <CheckCircle className="w-8 h-8 text-green-500 mx-auto" />
+          <h2 className="text-xl font-bold">Booking Confirmed!</h2>
+          <p>Thank you, {userDetails.name}.</p>
+          <p>
+            Your {selectedService.name} session is booked for {bookingDetails.date} at {bookingDetails.time}.
+          </p>
+          <button onClick={startOver} className="btn-primary mt-2">
+            Book Another Session
+          </button>
+        </div>
+      )}
     </main>
   );
 }
