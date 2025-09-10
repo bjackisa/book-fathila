@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="antialiased min-h-screen flex items-center justify-center">
+      <body className="antialiased min-h-screen w-screen overflow-x-hidden flex items-center justify-center">
         <div className="w-full max-w-2xl p-4 mx-auto space-y-8">{children}</div>
       </body>
     </html>
