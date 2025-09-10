@@ -82,7 +82,7 @@ export const Calendar = ({
       {isLoading ? (
         <p className="text-center">Loading availability...</p>
       ) : (
-        <div className="card space-y-4 p-6">
+        <div className="card space-y-3 p-4">
           <div className="flex justify-between items-center">
             <button
               onClick={handlePrevMonth}
@@ -126,7 +126,7 @@ export const Calendar = ({
                   key={day}
                   onClick={() => handleDateClick(day)}
                   disabled={!hasSlots || isPast || isSunday}
-                  className={`aspect-square w-full flex items-center justify-center rounded-md transition-all ${
+                  className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-md transition-all ${
                     isSelected
                       ? "bg-brand-pink text-white"
                       : hasSlots && !isPast && !isSunday
@@ -145,36 +145,40 @@ export const Calendar = ({
       {selectedDate && (
         <div>
           <h3 className="text-lg font-semibold text-center">Available slots for {selectedDate.toLocaleDateString()}</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-4 text-sm">
-            {availableSlots.length > 0 ? (
-              availableSlots.map((time) => (
-                <button
-                  key={time}
-                  onClick={() => setSelectedTime(time)}
-                  className={`px-3 py-2 rounded-md flex items-center justify-center gap-1 transition-all ${
-                    selectedTime === time
-                      ? "bg-brand-pink text-white shadow"
-                      : "border border-brand-pink/40 bg-white/60 dark:bg-neutral-800/60 backdrop-blur hover:bg-brand-pink hover:text-white"
-                  }`}
-                >
-                  <Clock className="w-4 h-4" />
-                  <span>{time}</span>
-                </button>
-              ))
-            ) : (
-              <p className="col-span-3 text-center text-gray-500">No available slots for this day.</p>
+          <div className="mt-4 md:flex md:items-start md:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm md:flex-1">
+              {availableSlots.length > 0 ? (
+                availableSlots.map((time) => (
+                  <button
+                    key={time}
+                    onClick={() => setSelectedTime(time)}
+                    className={`btn-slot flex items-center justify-center gap-1 ${
+                      selectedTime === time ? "btn-slot-active" : ""
+                    }`}
+                  >
+                    <Clock className="w-4 h-4" />
+                    <span>{time}</span>
+                  </button>
+                ))
+              ) : (
+                <p className="col-span-3 text-center text-gray-500">No available slots for this day.</p>
+              )}
+            </div>
+            {selectedTime && (
+              <button
+                onClick={() =>
+                  onBook({
+                    date: selectedDate!.toISOString().split("T")[0],
+                    time: selectedTime,
+                  })
+                }
+                className="w-full md:w-48 mt-4 md:mt-0 btn-primary"
+              >
+                Book {selectedDate.toLocaleDateString()} at {selectedTime}
+              </button>
             )}
           </div>
         </div>
-      )}
-
-      {selectedTime && (
-        <button
-          onClick={() => onBook({ date: selectedDate!.toISOString().split("T")[0], time: selectedTime })}
-          className="w-full btn-primary"
-        >
-          Book Now for {selectedTime}
-        </button>
       )}
     </div>
   );

@@ -19,10 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="antialiased min-h-screen">
-        <div className="min-h-screen flex items-center justify-center p-4">
-          <div className="w-full max-w-2xl space-y-8">{children}</div>
-        </div>
+      <body className="antialiased min-h-screen flex items-center justify-center">
+        <div className="w-full max-w-2xl p-4 mx-auto space-y-8">{children}</div>
       </body>
     </html>
   );

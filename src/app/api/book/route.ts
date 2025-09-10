@@ -8,15 +8,26 @@ export async function POST(request: Request) {
   const bookingsPath = path.join(dataDirectory, 'bookings.json');
 
   try {
+    // Ensure the data directory exists to avoid write errors
+    fs.mkdirSync(dataDirectory, { recursive: true });
+
     const newBooking = await request.json();
-    const { date, time } = newBooking.booking;
+    const { date, time } = newBooking.booking || {};
+
+    if (!date || !time) {
+      return NextResponse.json({ message: 'Invalid booking data.' }, { status: 400 });
+    }
 
     // --- Validation ---
-    // Read availability data
+    // Read availability data safely
     let availability: { slots: Record<string, string[]> } = { slots: {} };
     if (fs.existsSync(availabilityPath)) {
-      const availabilityData = fs.readFileSync(availabilityPath, 'utf-8');
-      availability = JSON.parse(availabilityData);
+      try {
+        const availabilityData = fs.readFileSync(availabilityPath, 'utf-8');
+        availability = JSON.parse(availabilityData);
+      } catch {
+        return NextResponse.json({ message: 'Failed to read availability data.' }, { status: 500 });
+      }
     }
 
     // Check if the slot is generally available
@@ -25,7 +36,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'This time slot is not available.' }, { status: 400 });
     }
 
-    // Read current bookings
+    // Read current bookings safely
     interface BookingEntry {
       service?: string;
       user?: { name: string; phone: string; email?: string };
@@ -35,9 +46,14 @@ export async function POST(request: Request) {
 
     let bookings: BookingEntry[] = [];
     if (fs.existsSync(bookingsPath)) {
-      const bookingsData = fs.readFileSync(bookingsPath, 'utf-8');
-      if (bookingsData) {
-        bookings = JSON.parse(bookingsData);
+      try {
+        const bookingsData = fs.readFileSync(bookingsPath, 'utf-8');
+        if (bookingsData) {
+          bookings = JSON.parse(bookingsData);
+        }
+      } catch {
+        // If the bookings file is corrupt, reset to an empty array
+        bookings = [];
       }
     }
 
@@ -53,8 +69,10 @@ export async function POST(request: Request) {
     bookings.push(newBooking);
     fs.writeFileSync(bookingsPath, JSON.stringify(bookings, null, 2));
 
-    return NextResponse.json({ message: 'Booking successful!', booking: newBooking }, { status: 201 });
-
+    return NextResponse.json(
+      { message: 'Booking successful!', booking: newBooking },
+      { status: 201 }
+    );
   } catch (error) {
     console.error('Error processing booking:', error);
     return NextResponse.json({ message: 'Error processing booking' }, { status: 500 });
