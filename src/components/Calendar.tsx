@@ -86,7 +86,7 @@ export const Calendar = ({
           <div className="flex justify-between items-center">
             <button
               onClick={handlePrevMonth}
-              className="slot-btn h-8 w-8 flex items-center justify-center text-win-blue disabled:opacity-50"
+              className="slot-btn h-8 w-8 flex items-center justify-center text-brand-pink disabled:opacity-50"
               disabled={currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() === today.getMonth()}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -96,7 +96,7 @@ export const Calendar = ({
             </h3>
             <button
               onClick={handleNextMonth}
-              className="slot-btn h-8 w-8 flex items-center justify-center text-win-blue"
+              className="slot-btn h-8 w-8 flex items-center justify-center text-brand-pink"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -128,11 +128,11 @@ export const Calendar = ({
                   disabled={!hasSlots || isPast || isSunday}
                   className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg text-sm transition-all ${
                     isSelected
-                      ? "bg-win-blue text-white"
+                      ? "bg-brand-pink text-white"
                       : hasSlots && !isPast && !isSunday
                       ? "slot-btn"
                       : "text-gray-400 cursor-not-allowed"
-                  } ${isToday ? "ring-2 ring-win-blue" : ""}`}
+                  } ${isToday ? "ring-2 ring-brand-pink" : ""}`}
                 >
                   {day}
                 </button>

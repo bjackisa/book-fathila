@@ -44,18 +44,40 @@ export async function POST(request: Request) {
       );
     }
 
-    // Save booking
-    const { error: insertError } = await supabase.from('bookings').insert({
-      service: newBooking.service,
-      user_name: newBooking.user?.name,
-      user_phone: newBooking.user?.phone,
-      user_email: newBooking.user?.email,
-      date,
-      time,
-      status: 'booked',
-    });
+      // Save booking
+      const { data: bookingRow, error: insertError } = await supabase
+        .from('bookings')
+        .insert({
+        service: newBooking.service,
+        user_name: newBooking.user?.name,
+        user_phone: newBooking.user?.phone,
+        user_email: newBooking.user?.email,
+        date,
+        time,
+        status: 'booked',
+        })
+        .select('id')
+        .single();
 
-    if (insertError) throw insertError;
+      if (insertError) throw insertError;
+
+      if (newBooking.note) {
+        const { error: noteError } = await supabase.from('booking_notes').insert({
+          booking_id: bookingRow.id,
+          note: newBooking.note,
+        });
+        if (noteError) throw noteError;
+      }
+
+      if (newBooking.reminder) {
+        const bookingDateTime = new Date(`${date}T${time}`);
+        const remindAt = new Date(bookingDateTime.getTime() - 24 * 60 * 60 * 1000).toISOString();
+        const { error: reminderError } = await supabase.from('booking_reminders').insert({
+          booking_id: bookingRow.id,
+          remind_at: remindAt,
+        });
+        if (reminderError) throw reminderError;
+      }
 
     return NextResponse.json(
       { message: 'Booking successful!', booking: newBooking },

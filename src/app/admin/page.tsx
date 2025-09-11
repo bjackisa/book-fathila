@@ -40,7 +40,7 @@ export default function AdminPage() {
       />
       <div className="surface w-full max-w-sm mx-auto">
         <h1 className="text-xl font-bold text-center mb-4 flex items-center justify-center gap-2">
-          <Shield className="w-5 h-5 text-win-blue" /> Admin Panel
+          <Shield className="w-5 h-5 text-brand-pink" /> Admin Panel
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -48,7 +48,7 @@ export default function AdminPage() {
               Date
             </label>
             <div className="relative">
-              <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-win-blue" />
+              <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-pink" />
               <input
                 type="date"
                 id="date"
@@ -64,7 +64,7 @@ export default function AdminPage() {
               Time
             </label>
             <div className="relative">
-              <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-win-blue" />
+              <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-pink" />
               <input
                 type="time"
                 id="time"

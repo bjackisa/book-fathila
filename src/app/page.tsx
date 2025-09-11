@@ -41,7 +41,7 @@ export default function Home() {
 
   const [step, setStep] = useState("service");
   const [selectedService, setSelectedService] = useState<{ name: string; duration: number } | null>(null);
-  const [userDetails, setUserDetails] = useState({ name: "", phone: "", email: "" });
+    const [userDetails, setUserDetails] = useState({ name: "", phone: "", email: "", note: "", reminder: false });
   const [bookingDetails, setBookingDetails] = useState({ date: "", time: "" });
 
   const handleServiceSelect = (service: { name: string; duration: number }) => {
@@ -49,19 +49,21 @@ export default function Home() {
     setStep("details");
   };
 
-  const handleDetailsSubmit = (details: { name: string; phone: string; email: string }) => {
-    setUserDetails(details);
-    setStep("calendar");
-  };
+    const handleDetailsSubmit = (details: { name: string; phone: string; email: string; note: string; reminder: boolean }) => {
+      setUserDetails(details);
+      setStep("calendar");
+    };
 
   const handleBooking = async (details: { date: string; time: string }) => {
     setBookingDetails(details);
     const bookingData = {
       service: selectedService?.name,
       duration: selectedService?.duration,
-      user: userDetails,
-      booking: details,
-    };
+        user: { name: userDetails.name, phone: userDetails.phone, email: userDetails.email },
+        note: userDetails.note,
+        reminder: userDetails.reminder,
+        booking: details,
+      };
     try {
       const response = await fetch("/api/book", {
         method: "POST",
@@ -83,7 +85,7 @@ export default function Home() {
   const startOver = () => {
     setStep("service");
     setSelectedService(null);
-    setUserDetails({ name: "", phone: "", email: "" });
+      setUserDetails({ name: "", phone: "", email: "", note: "", reminder: false });
     setBookingDetails({ date: "", time: "" });
   };
 
@@ -92,7 +94,7 @@ export default function Home() {
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         aria-label="Toggle Theme"
-        className="ml-auto mb-4 flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--surface-border)] bg-[var(--surface)] text-win-blue shadow hover:bg-white/80 dark:hover:bg-neutral-700"
+          className="ml-auto mb-4 flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--surface-border)] bg-[var(--surface)] text-brand-pink shadow hover:bg-white/80 dark:hover:bg-neutral-700"
       >
         {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
       </button>
@@ -112,7 +114,7 @@ export default function Home() {
       {step !== "confirmed" && (
         <div className="max-w-md mx-auto h-2 bg-[var(--surface)] rounded-full overflow-hidden">
           <div
-            className="h-full bg-win-blue transition-all"
+            className="h-full bg-brand-pink transition-all"
             style={{
               width:
                 step === "service"
@@ -133,13 +135,13 @@ export default function Home() {
             <button
               key={service.name}
               onClick={() => handleServiceSelect(service)}
-              className="surface flex flex-col items-start gap-3 text-left hover:border-win-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-win-blue"
+                className="surface flex flex-col items-start gap-3 text-left hover:border-brand-pink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-pink"
             >
               <div className="flex items-center gap-2">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-win-blue text-white text-xs font-bold">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-pink text-white text-xs font-bold">
                   {idx + 1}
                 </span>
-                <service.icon className="w-5 h-5 text-win-blue" />
+                  <service.icon className="w-5 h-5 text-brand-pink" />
               </div>
               <span className="text-sm font-medium">{service.name}</span>
             </button>
@@ -163,6 +165,8 @@ export default function Home() {
           <p>
             Your {selectedService.name} session is booked for {bookingDetails.date} at {bookingDetails.time}.
           </p>
+          {userDetails.note && <p className="italic">Note: {userDetails.note}</p>}
+          {userDetails.reminder && <p>A reminder will be sent 24 hours before.</p>}
           <button onClick={startOver} className="btn-accent mt-2">
             Book Another Session
           </button>
