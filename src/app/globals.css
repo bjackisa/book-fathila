@@ -5,17 +5,19 @@
 :root {
   --accent: #FF69B4;
   --accent-foreground: #ffffff;
-  --background: #f3f3f3;
+  /* Neutral page background */
+  --background: #f5f7fa;
   --foreground: #1f1f1f;
-  --surface: rgba(255, 255, 255, 0.75);
-  --surface-border: rgba(0, 0, 0, 0.1);
+  /* Card surface styles */
+  --surface: #ffffff;
+  --surface-border: #e2e8f0;
 }
 
 .dark {
   --background: #1a1a1a;
   --foreground: #f3f3f3;
-  --surface: rgba(26, 26, 26, 0.65);
-  --surface-border: rgba(255, 255, 255, 0.08);
+  --surface: #2d2d2d;
+  --surface-border: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {
@@ -38,14 +40,13 @@
     border-radius: 1rem;
     border: 1px solid var(--surface-border);
     background: var(--surface);
-    backdrop-filter: blur(20px) saturate(180%);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    padding: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
   .surface:hover {
     border-color: var(--accent);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   }
 
   .btn-accent {
@@ -94,6 +95,21 @@
     background: var(--accent);
     border-color: var(--accent);
     color: var(--accent-foreground);
+  }
+
+  .option-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--surface-border);
+    background: var(--surface);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .option-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
 
   .input-field {

@@ -195,14 +195,11 @@ export default function Home() {
             <button
               key={service.name}
               onClick={() => handleServiceSelect(service)}
-              className={`flex flex-col items-start gap-3 text-left p-4 rounded-lg border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-pink transition-colors $
-{theme === "dark" ? "bg-white text-black border-gray-300 hover:bg-gray-100" : "bg-gray-800 text-white border-gray-700 hover:bg-gray-700"}`}
+              className="option-card text-left"
             >
-              <div className="flex items-center gap-2">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-pink text-white text-xs font-bold">
-                  {idx + 1}
-                </span>
-              </div>
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-pink text-white text-xs font-bold">
+                {idx + 1}
+              </span>
               <span className="text-sm font-medium">{service.name}</span>
             </button>
           ))}

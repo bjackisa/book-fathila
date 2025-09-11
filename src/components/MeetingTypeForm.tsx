@@ -12,7 +12,7 @@ export function MeetingTypeForm({ onSubmit, onBack }: Props) {
         <button
           type="button"
           onClick={() => onSubmit("Online")}
-          className="slot-btn flex items-center gap-3 text-left"
+          className="option-card w-full text-left"
         >
           <Monitor className="w-5 h-5" />
           <div>
@@ -23,7 +23,7 @@ export function MeetingTypeForm({ onSubmit, onBack }: Props) {
         <button
           type="button"
           onClick={() => onSubmit("Physical")}
-          className="slot-btn flex items-center gap-3 text-left"
+          className="option-card w-full text-left"
         >
           <MapPin className="w-5 h-5" />
           <div>
