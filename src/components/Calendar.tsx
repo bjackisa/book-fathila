@@ -82,11 +82,11 @@ export const Calendar = ({
       {isLoading ? (
         <p className="text-center">Loading availability...</p>
       ) : (
-        <div className="card space-y-3 p-4">
+        <div className="surface space-y-3 p-4">
           <div className="flex justify-between items-center">
             <button
               onClick={handlePrevMonth}
-              className="p-2 rounded-lg border border-brand-pink/40 text-brand-pink hover:bg-brand-pink/10 hover:border-brand-pink/60 disabled:opacity-50"
+              className="slot-btn h-8 w-8 flex items-center justify-center text-win-blue disabled:opacity-50"
               disabled={currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() === today.getMonth()}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -96,7 +96,7 @@ export const Calendar = ({
             </h3>
             <button
               onClick={handleNextMonth}
-              className="p-2 rounded-lg border border-brand-pink/40 text-brand-pink hover:bg-brand-pink/10 hover:border-brand-pink/60"
+              className="slot-btn h-8 w-8 flex items-center justify-center text-win-blue"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -126,13 +126,13 @@ export const Calendar = ({
                   key={day}
                   onClick={() => handleDateClick(day)}
                   disabled={!hasSlots || isPast || isSunday}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg transition-all ${
+                  className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg text-sm transition-all ${
                     isSelected
-                      ? "bg-brand-pink text-white"
+                      ? "bg-win-blue text-white"
                       : hasSlots && !isPast && !isSunday
-                      ? "border border-brand-pink/40 bg-white/60 dark:bg-neutral-800/60 backdrop-blur hover:bg-brand-pink hover:text-white hover:scale-105"
+                      ? "slot-btn"
                       : "text-gray-400 cursor-not-allowed"
-                  } ${isToday ? "ring-2 ring-brand-pink" : ""}`}
+                  } ${isToday ? "ring-2 ring-win-blue" : ""}`}
                 >
                   {day}
                 </button>
@@ -152,8 +152,8 @@ export const Calendar = ({
                   <button
                     key={time}
                     onClick={() => setSelectedTime(time)}
-                    className={`btn-slot flex items-center justify-center gap-1 ${
-                      selectedTime === time ? "btn-slot-active" : ""
+                    className={`slot-btn flex items-center justify-center gap-1 ${
+                      selectedTime === time ? "slot-btn-active" : ""
                     }`}
                   >
                     <Clock className="w-4 h-4" />
@@ -172,7 +172,7 @@ export const Calendar = ({
                     time: selectedTime,
                   })
                 }
-                className="w-full md:w-48 mt-4 md:mt-0 btn-primary"
+                className="w-full md:w-48 mt-4 md:mt-0 btn-accent"
               >
                 Book {selectedDate.toLocaleDateString()} at {selectedTime}
               </button>

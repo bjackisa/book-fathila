@@ -13,9 +13,7 @@ export default function AdminPage() {
     try {
       const res = await fetch("/api/block", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ date, time }),
       });
       const data = await res.json();
@@ -26,7 +24,7 @@ export default function AdminPage() {
       setDate("");
       setTime("");
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
+      const message = err instanceof Error ? err.message : "Unknown error";
       setMessage(`Failed to block slot: ${message}`);
     }
   };
@@ -40,9 +38,9 @@ export default function AdminPage() {
         height={80}
         className="rounded-full mx-auto"
       />
-      <div className="card w-full max-w-sm mx-auto">
+      <div className="surface w-full max-w-sm mx-auto">
         <h1 className="text-xl font-bold text-center mb-4 flex items-center justify-center gap-2">
-          <Shield className="w-5 h-5 text-brand-pink" /> Admin Panel
+          <Shield className="w-5 h-5 text-win-blue" /> Admin Panel
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -50,13 +48,13 @@ export default function AdminPage() {
               Date
             </label>
             <div className="relative">
-              <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-pink" />
+              <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-win-blue" />
               <input
                 type="date"
                 id="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="input-primary pl-9"
+                className="input-field pl-9"
                 required
               />
             </div>
@@ -66,18 +64,18 @@ export default function AdminPage() {
               Time
             </label>
             <div className="relative">
-              <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-pink" />
+              <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-win-blue" />
               <input
                 type="time"
                 id="time"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
-                className="input-primary pl-9"
+                className="input-field pl-9"
                 required
               />
             </div>
           </div>
-          <button type="submit" className="w-full btn-primary">
+          <button type="submit" className="w-full btn-accent">
             Block Slot
           </button>
         </form>
