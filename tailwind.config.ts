@@ -11,7 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "win-blue": "#0078D4",
+        "brand-pink": "#FF69B4",
       },
       fontFamily: {
         sans: ['"Segoe UI Variable"', '"Segoe UI"', "sans-serif"],
