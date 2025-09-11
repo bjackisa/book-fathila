@@ -96,10 +96,10 @@ export default function Home() {
   };
 
   return (
-    <main className="space-y-10">
+    <main className="space-y-10 animate-fade-in">
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="ml-auto mb-4 p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white transition-colors"
+        className="ml-auto mb-4 p-2 rounded-xl border border-white/40 bg-white/60 text-brand-pink shadow-sm backdrop-blur hover:bg-white/80 hover:shadow transition-colors dark:border-neutral-700/60 dark:bg-neutral-800/60 dark:hover:bg-neutral-800/80"
         aria-label="Toggle Theme"
       >
         {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -110,14 +110,14 @@ export default function Home() {
           alt="Fathila Nanozi"
           width={100}
           height={100}
-          className="rounded-full"
+          className="rounded-full shadow-lg ring-1 ring-white/50 dark:ring-neutral-700/50"
         />
         <h1 className="text-3xl font-bold">Book Fathila</h1>
         {step === "service" && <p className="text-lg">Choose a service to get started</p>}
       </header>
 
       {step !== "confirmed" && (
-        <div className="max-w-md mx-auto h-2 bg-white/40 dark:bg-neutral-700 rounded-full overflow-hidden">
+        <div className="max-w-md mx-auto h-2 bg-white/50 dark:bg-neutral-700 rounded-full overflow-hidden shadow-inner">
           <div
             className="h-full bg-brand-pink transition-all"
             style={{
@@ -140,7 +140,7 @@ export default function Home() {
             <button
               key={service.name}
               onClick={() => handleServiceSelect(service)}
-              className="card flex flex-col items-start gap-3 p-6 text-left cursor-pointer transition-transform hover:-translate-y-1 hover:shadow-2xl"
+              className="card flex flex-col items-start gap-3 p-6 text-left cursor-pointer transition-transform hover:-translate-y-1 hover:shadow-2xl focus-visible:ring-2 focus-visible:ring-brand-pink/40"
             >
               <div className="flex items-center gap-2">
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-pink text-white text-xs font-bold">
