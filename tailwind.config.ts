@@ -11,10 +11,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "brand-pink": "#E52A7A",
+        "win-blue": "#0078D4",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
+        sans: ['"Segoe UI Variable"', '"Segoe UI"', "sans-serif"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
