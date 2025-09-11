@@ -77,7 +77,7 @@ export const Calendar = ({
   const availableSlots = filterSlots(getAvailableSlotsForDate(selectedDate));
 
   return (
-    <div className="w-full max-w-lg mx-auto space-y-6">
+    <div className="w-full max-w-lg mx-auto space-y-6 animate-fade-in">
       <h2 className="text-2xl font-bold text-center">Select a date and time for {service}</h2>
       {isLoading ? (
         <p className="text-center">Loading availability...</p>
@@ -86,7 +86,7 @@ export const Calendar = ({
           <div className="flex justify-between items-center">
             <button
               onClick={handlePrevMonth}
-              className="p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white disabled:opacity-50"
+              className="p-2 rounded-lg border border-brand-pink/40 text-brand-pink hover:bg-brand-pink/10 hover:border-brand-pink/60 disabled:opacity-50"
               disabled={currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() === today.getMonth()}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -96,7 +96,7 @@ export const Calendar = ({
             </h3>
             <button
               onClick={handleNextMonth}
-              className="p-2 rounded-full border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white"
+              className="p-2 rounded-lg border border-brand-pink/40 text-brand-pink hover:bg-brand-pink/10 hover:border-brand-pink/60"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -126,11 +126,11 @@ export const Calendar = ({
                   key={day}
                   onClick={() => handleDateClick(day)}
                   disabled={!hasSlots || isPast || isSunday}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-md transition-all ${
+                  className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg transition-all ${
                     isSelected
                       ? "bg-brand-pink text-white"
                       : hasSlots && !isPast && !isSunday
-                      ? "border border-brand-pink/40 bg-white/60 dark:bg-neutral-800/60 backdrop-blur hover:bg-brand-pink hover:text-white"
+                      ? "border border-brand-pink/40 bg-white/60 dark:bg-neutral-800/60 backdrop-blur hover:bg-brand-pink hover:text-white hover:scale-105"
                       : "text-gray-400 cursor-not-allowed"
                   } ${isToday ? "ring-2 ring-brand-pink" : ""}`}
                 >

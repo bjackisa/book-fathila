@@ -56,37 +56,45 @@
   body {
     font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: #1f2937;
-    background: linear-gradient(to bottom right, #ffffff, #ffe4e6, #fce7f3);
+    /* Windows 11 inspired mica background with subtle brand tint */
+    background:
+      radial-gradient(at 0% 0%, rgba(229, 42, 122, 0.08), transparent 60%),
+      linear-gradient(to bottom right, #ffffff, #f1f5f9);
+    background-attachment: fixed;
     min-height: 100vh;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: color var(--transition), background var(--transition);
   }
-  
+
   .dark body {
     color: #f9f9f9;
-    background: linear-gradient(to bottom right, #171717, #171717, #262626);
+    background:
+      radial-gradient(at 0% 0%, rgba(229, 42, 122, 0.15), transparent 60%),
+      linear-gradient(to bottom right, #171717, #262626);
   }
-  
+
   /* Enhanced scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
-  
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   ::-webkit-scrollbar-thumb {
-    background: rgba(229, 42, 122, 0.3);
-    border-radius: 3px;
-    transition: background var(--transition-fast);
+    background-color: rgba(229, 42, 122, 0.4);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    transition: background-color var(--transition-fast);
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(229, 42, 122, 0.5);
+    background-color: rgba(229, 42, 122, 0.6);
   }
   
   /* Selection styling */
@@ -156,11 +164,11 @@
   /* Enhanced Card */
   .card {
     position: relative;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-shadow: var(--shadow);
     padding: 1.25rem;
     transition: all var(--transition);
@@ -191,8 +199,8 @@
   }
   
   .dark .card {
-    border-color: rgba(64, 64, 64, 0.4);
-    background: rgba(38, 38, 38, 0.6);
+    border-color: rgba(64, 64, 64, 0.5);
+    background: rgba(38, 38, 38, 0.65);
   }
   
   .dark .card::before {
@@ -212,7 +220,7 @@
     gap: 0.5rem;
     padding: 0.75rem 1.25rem;
     font-weight: 600;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     background: linear-gradient(135deg, #E52A7A, #ec4899);
     color: #ffffff;
     box-shadow: var(--shadow);
@@ -260,7 +268,7 @@
   .btn-slot {
     position: relative;
     padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
+    border-radius: 0.5rem;
     border: 1px solid rgba(229, 42, 122, 0.4);
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(12px);
@@ -336,11 +344,11 @@
     position: relative;
     width: 100%;
     height: 2.75rem;
-    border-radius: 0.375rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     font-size: 0.875rem;
     padding: 0 0.75rem;
     transition: all var(--transition);
@@ -370,8 +378,8 @@
   }
   
   .dark .input-primary {
-    border-color: rgba(64, 64, 64, 0.5);
-    background: rgba(38, 38, 38, 0.6);
+    border-color: rgba(64, 64, 64, 0.6);
+    background: rgba(38, 38, 38, 0.65);
   }
   
   .dark .input-primary:hover {
