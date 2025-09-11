@@ -17,6 +17,11 @@
   --shadow-md: 0 6px 14px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.2);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.25);
+  
+  /* Container and spacing variables */
+  --container-max-width: 1200px;
+  --container-padding: 2rem;
+  --container-padding-mobile: 1rem;
 }
 
 .dark {
@@ -104,6 +109,50 @@
 }
 
 @layer components {
+  /* Centered Container System */
+  .container-centered {
+    max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+    width: 100%;
+  }
+  
+  .container-narrow {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+    width: 100%;
+  }
+  
+  .container-wide {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+    width: 100%;
+  }
+  
+  /* Section wrapper for consistent spacing */
+  .section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  .section-sm {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .section-lg {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  
   /* Enhanced Card */
   .card {
     position: relative;
@@ -116,6 +165,9 @@
     padding: 1.25rem;
     transition: all var(--transition);
     overflow: hidden;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .card::before {
@@ -338,6 +390,41 @@
     color: #6b7280;
   }
   
+  /* Centered content wrappers */
+  .content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 100%;
+  }
+  
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .grid-center {
+    display: grid;
+    place-items: center;
+  }
+  
+  /* Form centering */
+  .form-centered {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  
+  .form-wide {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  
   /* Utility animations */
   .animate-fade-in {
     animation: fadeIn 0.5s ease-out forwards;
@@ -429,6 +516,20 @@
 
 /* Responsive enhancements */
 @media (max-width: 768px) {
+  :root {
+    --container-padding: var(--container-padding-mobile);
+  }
+  
+  .section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .section-lg {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
   .card {
     padding: 1rem;
   }
@@ -444,6 +545,24 @@
   
   .input-primary:focus {
     transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --container-padding: 0.75rem;
+  }
+  
+  .section {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+/* Large screens - add more side padding */
+@media (min-width: 1400px) {
+  :root {
+    --container-padding: 3rem;
   }
 }
 
