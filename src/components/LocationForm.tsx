@@ -63,7 +63,7 @@ export function LocationForm({ onSubmit }: Props) {
       {choice === "other" && (
         <div className="space-y-2">
           <p className="text-sm italic">
-            Note: At the moment you are unable to meet persons outside of Uganda physically.
+            Note: At the moment, I am unable to meet persons outside of Uganda physically.
           </p>
           <input
             className="input-field"
