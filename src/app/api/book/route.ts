@@ -44,20 +44,26 @@ export async function POST(request: Request) {
       );
     }
 
-      // Save booking
-      const { data: bookingRow, error: insertError } = await supabase
-        .from('bookings')
-        .insert({
+    // Save booking
+    const { data: bookingRow, error: insertError } = await supabase
+      .from('bookings')
+      .insert({
         service: newBooking.service,
         user_name: newBooking.user?.name,
         user_phone: newBooking.user?.phone,
         user_email: newBooking.user?.email,
+        attendees: newBooking.meeting?.attendees,
+        meeting_type: newBooking.meeting?.meetingType,
+        location_option: newBooking.meeting?.locationOption,
+        address: newBooking.meeting?.address,
+        district: newBooking.meeting?.district,
+        country: newBooking.meeting?.country,
         date,
         time,
         status: 'booked',
-        })
-        .select('id')
-        .single();
+      })
+      .select('id')
+      .single();
 
       if (insertError) throw insertError;
 
