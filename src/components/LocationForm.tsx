@@ -7,9 +7,10 @@ interface Props {
     district: string;
     country: string;
   }) => void;
+  onBack: () => void;
 }
 
-export function LocationForm({ onSubmit }: Props) {
+export function LocationForm({ onSubmit, onBack }: Props) {
   const [choice, setChoice] = useState<"office" | "other" | "">("");
   const [address, setAddress] = useState("");
   const [district, setDistrict] = useState("");
@@ -88,9 +89,14 @@ export function LocationForm({ onSubmit }: Props) {
           />
         </div>
       )}
-      <button type="submit" className="btn-accent w-full">
-        Next
-      </button>
+      <div className="flex justify-between gap-2">
+        <button type="button" onClick={onBack} className="slot-btn flex-1">
+          Back
+        </button>
+        <button type="submit" className="btn-accent flex-1">
+          Next
+        </button>
+      </div>
     </form>
   );
 }

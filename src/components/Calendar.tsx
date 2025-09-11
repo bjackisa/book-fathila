@@ -7,10 +7,12 @@ export const Calendar = ({
   service,
   duration,
   onBook,
+  onBack,
 }: {
   service: string;
   duration: number;
   onBook: (bookingDetails: { date: string; time: string }) => void;
+  onBack: () => void;
 }) => {
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -78,7 +80,10 @@ export const Calendar = ({
 
   return (
     <div className="w-full max-w-lg mx-auto space-y-6 animate-fade-in">
-      <h2 className="text-2xl font-bold text-center">Select a date and time for {service}</h2>
+      <div className="flex items-center justify-between">
+        <button onClick={onBack} className="slot-btn">Back</button>
+        <h2 className="text-2xl font-bold text-center flex-1">Select a date and time for {service}</h2>
+      </div>
       {isLoading ? (
         <p className="text-center">Loading availability...</p>
       ) : (

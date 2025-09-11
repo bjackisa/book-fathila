@@ -1,25 +1,40 @@
+import { Monitor, MapPin } from "lucide-react";
+
 interface Props {
   onSubmit: (type: "Physical" | "Online") => void;
+  onBack: () => void;
 }
 
-export function MeetingTypeForm({ onSubmit }: Props) {
+export function MeetingTypeForm({ onSubmit, onBack }: Props) {
   return (
-    <div className="surface max-w-md mx-auto space-y-4">
-      <p className="font-medium">Do you prefer a physical or online meeting?</p>
-      <div className="flex flex-col gap-2">
-        <button
-          type="button"
-          onClick={() => onSubmit("Physical")}
-          className="slot-btn"
-        >
-          Physical
-        </button>
+    <div className="surface max-w-md mx-auto space-y-6">
+      <div className="flex flex-col gap-3">
         <button
           type="button"
           onClick={() => onSubmit("Online")}
-          className="slot-btn"
+          className="slot-btn flex items-center gap-3 text-left"
         >
-          Online
+          <Monitor className="w-5 h-5" />
+          <div>
+            <p className="font-medium">Online Meeting</p>
+            <p className="text-xs text-gray-500">Video call via Zoom/Teams</p>
+          </div>
+        </button>
+        <button
+          type="button"
+          onClick={() => onSubmit("Physical")}
+          className="slot-btn flex items-center gap-3 text-left"
+        >
+          <MapPin className="w-5 h-5" />
+          <div>
+            <p className="font-medium">In-Person Meeting</p>
+            <p className="text-xs text-gray-500">Physical location</p>
+          </div>
+        </button>
+      </div>
+      <div className="flex justify-between gap-2">
+        <button onClick={onBack} type="button" className="slot-btn flex-1">
+          Back
         </button>
       </div>
     </div>
