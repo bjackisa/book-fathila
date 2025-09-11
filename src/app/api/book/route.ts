@@ -1,16 +1,8 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { supabase } from '@/lib/supabase';
 
 export async function POST(request: Request) {
-  const dataDirectory = path.join(process.cwd(), 'data');
-  const availabilityPath = path.join(dataDirectory, 'availability.json');
-  const bookingsPath = path.join(dataDirectory, 'bookings.json');
-
   try {
-    // Ensure the data directory exists to avoid write errors
-    fs.mkdirSync(dataDirectory, { recursive: true });
-
     const newBooking = await request.json();
     const { date, time } = newBooking.booking || {};
 
@@ -18,56 +10,52 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Invalid booking data.' }, { status: 400 });
     }
 
-    // --- Validation ---
-    // Read availability data safely
-    let availability: { slots: Record<string, string[]> } = { slots: {} };
-    if (fs.existsSync(availabilityPath)) {
-      try {
-        const availabilityData = fs.readFileSync(availabilityPath, 'utf-8');
-        availability = JSON.parse(availabilityData);
-      } catch {
-        return NextResponse.json({ message: 'Failed to read availability data.' }, { status: 500 });
-      }
+    // Check if slot exists in availability table
+    const { data: availabilitySlot, error: availabilityError } = await supabase
+      .from('availability')
+      .select('id')
+      .eq('date', date)
+      .eq('time', time)
+      .maybeSingle();
+
+    if (availabilityError) throw availabilityError;
+
+    if (!availabilitySlot) {
+      return NextResponse.json(
+        { message: 'This time slot is not available.' },
+        { status: 400 }
+      );
     }
 
-    // Check if the slot is generally available
-    const isSlotAvailable = availability.slots[date]?.includes(time);
-    if (!isSlotAvailable) {
-      return NextResponse.json({ message: 'This time slot is not available.' }, { status: 400 });
+    // Check if slot already booked or blocked
+    const { data: existing, error: existingError } = await supabase
+      .from('bookings')
+      .select('id')
+      .eq('date', date)
+      .eq('time', time)
+      .maybeSingle();
+
+    if (existingError) throw existingError;
+
+    if (existing) {
+      return NextResponse.json(
+        { message: 'This time slot has already been booked.' },
+        { status: 409 }
+      );
     }
 
-    // Read current bookings safely
-    interface BookingEntry {
-      service?: string;
-      user?: { name: string; phone: string; email?: string };
-      booking: { date: string; time: string };
-      status?: string;
-    }
+    // Save booking
+    const { error: insertError } = await supabase.from('bookings').insert({
+      service: newBooking.service,
+      user_name: newBooking.user?.name,
+      user_phone: newBooking.user?.phone,
+      user_email: newBooking.user?.email,
+      date,
+      time,
+      status: 'booked',
+    });
 
-    let bookings: BookingEntry[] = [];
-    if (fs.existsSync(bookingsPath)) {
-      try {
-        const bookingsData = fs.readFileSync(bookingsPath, 'utf-8');
-        if (bookingsData) {
-          bookings = JSON.parse(bookingsData);
-        }
-      } catch {
-        // If the bookings file is corrupt, reset to an empty array
-        bookings = [];
-      }
-    }
-
-    // Check if the slot is already booked or blocked
-    const isSlotBooked = bookings.some(
-      (b) => b.booking.date === date && b.booking.time === time
-    );
-    if (isSlotBooked) {
-      return NextResponse.json({ message: 'This time slot has already been booked.' }, { status: 409 }); // 409 Conflict
-    }
-
-    // --- Save the new booking ---
-    bookings.push(newBooking);
-    fs.writeFileSync(bookingsPath, JSON.stringify(bookings, null, 2));
+    if (insertError) throw insertError;
 
     return NextResponse.json(
       { message: 'Booking successful!', booking: newBooking },

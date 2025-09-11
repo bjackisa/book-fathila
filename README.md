@@ -1,8 +1,10 @@
-This is a simple booking application built with [Next.js](https://nextjs.org). It allows visitors to schedule sessions and stores bookings in JSON files so no external database is required.
+This is a simple booking application built with [Next.js](https://nextjs.org). It stores bookings and availability in a [Supabase](https://supabase.com) Postgres database.
 
 ## Getting Started
 
-First, run the development server:
+1. Create the required tables in your database by running the SQL in `supabase/schema.sql`.
+2. Set the Supabase connection environment variables (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, etc.).
+3. Run the development server:
 
 ```bash
 npm run dev
