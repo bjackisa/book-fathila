@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { UserDetailsForm } from "@/components/UserDetailsForm";
 import { Calendar } from "@/components/Calendar";
 import { Sun, Moon, CheckCircle } from "lucide-react";
@@ -8,6 +8,7 @@ import { AttendeeForm } from "@/components/AttendeeForm";
 import { MeetingTypeForm } from "@/components/MeetingTypeForm";
 import { LocationForm } from "@/components/LocationForm";
 import { StepIndicator } from "@/components/StepIndicator";
+import { generateGoogleCalendarLink } from "@/lib/calendar";
 
 const services = [
   {
@@ -50,6 +51,7 @@ export default function Home() {
   });
   const [userDetails, setUserDetails] = useState({ name: "", phone: "", email: "", note: "", reminder: false });
   const [bookingDetails, setBookingDetails] = useState({ date: "", time: "" });
+  const [bookingId, setBookingId] = useState<string | null>(null);
 
   const handleServiceSelect = (service: { name: string; duration: number }) => {
     setSelectedService(service);
@@ -109,10 +111,11 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bookingData),
       });
+      const data = await response.json();
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Something went wrong");
+        throw new Error(data.message || "Something went wrong");
       }
+      setBookingId(data.booking?.id ?? null);
       setStep("confirmed");
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : "Unknown error";
@@ -135,6 +138,35 @@ export default function Home() {
     setUserDetails({ name: "", phone: "", email: "", note: "", reminder: false });
     setBookingDetails({ date: "", time: "" });
   };
+
+  const calendarLink = useMemo(() => {
+    if (!selectedService || !bookingDetails.date || !bookingDetails.time) return "";
+    const start = new Date(`${bookingDetails.date}T${bookingDetails.time}`);
+    const end = new Date(start.getTime() + selectedService.duration * 60000);
+    const details = [
+      bookingId ? `Booking ID: ${bookingId}` : "",
+      `Name: ${userDetails.name}`,
+      `Email: ${userDetails.email}`,
+      `Phone: ${userDetails.phone}`,
+      meetingInfo.attendees ? `Group Size: ${meetingInfo.attendees}` : "",
+      meetingInfo.meetingType ? `Meeting Type: ${meetingInfo.meetingType}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+    const location =
+      meetingInfo.locationOption === "office"
+        ? "Kigobe Rd, Ntinda, Kampala"
+        : meetingInfo.locationOption === "other"
+        ? `${meetingInfo.address}, ${meetingInfo.district}, ${meetingInfo.country}`
+        : "";
+    return generateGoogleCalendarLink({
+      title: selectedService.name,
+      start,
+      end,
+      details,
+      location,
+    });
+  }, [bookingId, selectedService, bookingDetails, meetingInfo, userDetails]);
 
   const currentStepNumber =
     step === "service"
@@ -255,6 +287,7 @@ export default function Home() {
           <p>
             Your {selectedService.name} session is booked for {bookingDetails.date} at {bookingDetails.time}.
           </p>
+          {bookingId && <p>Booking ID: {bookingId}</p>}
           {meetingInfo.meetingType && <p>Meeting type: {meetingInfo.meetingType}</p>}
           {meetingInfo.attendees && <p>Attendees: {meetingInfo.attendees}</p>}
           {meetingInfo.locationOption === "other" && (
@@ -265,6 +298,16 @@ export default function Home() {
           {meetingInfo.locationOption === "office" && <p>Location: Kigobe Rd, Ntinda, Kampala</p>}
           {userDetails.note && <p className="italic">Note: {userDetails.note}</p>}
           {userDetails.reminder && <p>A reminder will be sent 24 hours before.</p>}
+          {calendarLink && (
+            <a
+              href={calendarLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-accent inline-block"
+            >
+              Confirm &amp; Save to Calendar
+            </a>
+          )}
           <button onClick={startOver} className="btn-accent mt-2">
             Book Another Session
           </button>

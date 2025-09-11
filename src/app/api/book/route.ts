@@ -86,7 +86,7 @@ export async function POST(request: Request) {
       }
 
     return NextResponse.json(
-      { message: 'Booking successful!', booking: newBooking },
+      { message: 'Booking successful!', booking: { id: bookingRow.id, ...newBooking } },
       { status: 201 }
     );
   } catch (error) {
