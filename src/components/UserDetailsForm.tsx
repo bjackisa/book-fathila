@@ -6,10 +6,12 @@ import { User, Phone, Mail } from "lucide-react";
 export const UserDetailsForm = ({
   service,
   onSubmit,
-  }: {
-    service: string;
-    onSubmit: (details: { name: string; phone: string; email: string; note: string; reminder: boolean }) => void;
-  }) => {
+  onBack,
+}: {
+  service: string;
+  onSubmit: (details: { name: string; phone: string; email: string; note: string; reminder: boolean }) => void;
+  onBack: () => void;
+}) => {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
@@ -100,9 +102,14 @@ export const UserDetailsForm = ({
                 Send me a reminder 24 hours before
               </label>
             </div>
-            <button type="submit" className="w-full mt-2 btn-accent">
-              Next
-            </button>
+            <div className="flex justify-between gap-2 mt-2">
+              <button type="button" onClick={onBack} className="slot-btn flex-1">
+                Back
+              </button>
+              <button type="submit" className="btn-accent flex-1">
+                Next
+              </button>
+            </div>
           </div>
         </form>
       </div>

@@ -2,39 +2,37 @@ import { useState } from "react";
 
 interface Props {
   onSubmit: (size: string) => void;
+  onBack: () => void;
 }
 
-export function AttendeeForm({ onSubmit }: Props) {
-  const [size, setSize] = useState("");
+export function AttendeeForm({ onSubmit, onBack }: Props) {
+  const [size, setSize] = useState(1);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!size) return;
-    onSubmit(size);
+    onSubmit(String(size));
   };
 
   return (
-    <form onSubmit={handleSubmit} className="surface max-w-md mx-auto space-y-4">
-      <label className="block">
-        <span className="block mb-2 font-medium">Size of Attendees</span>
-        <select
+    <form onSubmit={handleSubmit} className="surface max-w-md mx-auto space-y-6 text-center">
+      <div className="flex items-center justify-center gap-2">
+        <input
+          type="number"
+          min={1}
           value={size}
-          onChange={(e) => setSize(e.target.value)}
-          required
-          className="input-field"
-        >
-          <option value="" disabled>
-            Choose...
-          </option>
-          <option>Just Me</option>
-          <option>2 - 5 People</option>
-          <option>6 - 25 People</option>
-          <option>26+ People</option>
-        </select>
-      </label>
-      <button type="submit" className="btn-accent w-full">
-        Next
-      </button>
+          onChange={(e) => setSize(parseInt(e.target.value) || 1)}
+          className="input-field w-24 text-center"
+        />
+        <span className="text-sm">people</span>
+      </div>
+      <div className="flex justify-between gap-2">
+        <button type="button" onClick={onBack} className="slot-btn flex-1">
+          Back
+        </button>
+        <button type="submit" className="btn-accent flex-1">
+          Next
+        </button>
+      </div>
     </form>
   );
 }

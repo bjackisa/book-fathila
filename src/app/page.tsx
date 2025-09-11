@@ -7,6 +7,7 @@ import { Sun, Moon, CheckCircle } from "lucide-react";
 import { AttendeeForm } from "@/components/AttendeeForm";
 import { MeetingTypeForm } from "@/components/MeetingTypeForm";
 import { LocationForm } from "@/components/LocationForm";
+import { StepIndicator } from "@/components/StepIndicator";
 
 const services = [
   {
@@ -135,6 +136,30 @@ export default function Home() {
     setBookingDetails({ date: "", time: "" });
   };
 
+  const currentStepNumber =
+    step === "service"
+      ? 1
+      : step === "attendees"
+      ? 2
+      : step === "meeting-type" || step === "location" || step === "online-info"
+      ? 3
+      : step === "details"
+      ? 4
+      : 5;
+
+  const stepTitle =
+    step === "service"
+      ? "Select a Service"
+      : step === "attendees"
+      ? "How many people will attend?"
+      : step === "meeting-type" || step === "location" || step === "online-info"
+      ? "Meeting Type"
+      : step === "details"
+      ? "Contact Details"
+      : step === "calendar"
+      ? "Select Date & Time"
+      : "";
+
   return (
     <main className="space-y-10 animate-fade-in">
       <button
@@ -154,30 +179,13 @@ export default function Home() {
           className="rounded-full shadow ring-1 ring-[var(--surface-border)]"
         />
         <h1 className="text-3xl font-bold">Book Fathila</h1>
-        {step === "service" && <p className="text-lg">Choose a service to get started</p>}
+        <p className="text-sm text-gray-500">Professional Business Advisory & Consulting Services</p>
       </header>
-
       {step !== "confirmed" && (
-        <div className="max-w-md mx-auto h-2 bg-[var(--surface)] rounded-full overflow-hidden">
-          <div
-            className="h-full bg-brand-pink transition-all"
-            style={{
-              width:
-                step === "service"
-                  ? "14%"
-                  : step === "attendees"
-                  ? "28%"
-                  : step === "meeting-type"
-                  ? "42%"
-                  : step === "location" || step === "online-info"
-                  ? "56%"
-                  : step === "details"
-                  ? "70%"
-                  : step === "calendar"
-                  ? "85%"
-                  : "100%",
-            }}
-          />
+        <div className="space-y-4">
+          <StepIndicator current={currentStepNumber} />
+          <p className="text-center text-sm">Step {currentStepNumber} of 5</p>
+          {stepTitle && <h2 className="text-xl font-semibold text-center">{stepTitle}</h2>}
         </div>
       )}
 
@@ -201,25 +209,45 @@ export default function Home() {
         </div>
       )}
 
-      {step === "attendees" && <AttendeeForm onSubmit={handleAttendeeSubmit} />}
+      {step === "attendees" && (
+        <AttendeeForm onSubmit={handleAttendeeSubmit} onBack={() => setStep("service")} />
+      )}
 
-      {step === "meeting-type" && <MeetingTypeForm onSubmit={handleMeetingType} />}
+      {step === "meeting-type" && (
+        <MeetingTypeForm onSubmit={handleMeetingType} onBack={() => setStep("attendees")} />
+      )}
 
-      {step === "location" && <LocationForm onSubmit={handleLocationSubmit} />}
+      {step === "location" && (
+        <LocationForm onSubmit={handleLocationSubmit} onBack={() => setStep("meeting-type")} />
+      )}
 
       {step === "online-info" && (
         <div className="surface max-w-md mx-auto space-y-4">
           <p>If approved, the meeting will be hosted on my Zoom and might be recorded for record purposes.</p>
-          <button className="btn-accent w-full" onClick={() => setStep("details")}>
-            Continue
-          </button>
+          <div className="flex justify-between gap-2">
+            <button className="slot-btn flex-1" onClick={() => setStep("meeting-type")}>Back</button>
+            <button className="btn-accent flex-1" onClick={() => setStep("details")}>Continue</button>
+          </div>
         </div>
       )}
 
-      {step === "details" && selectedService && <UserDetailsForm service={selectedService.name} onSubmit={handleDetailsSubmit} />}
+      {step === "details" && selectedService && (
+        <UserDetailsForm
+          service={selectedService.name}
+          onSubmit={handleDetailsSubmit}
+          onBack={() =>
+            setStep(meetingInfo.meetingType === "Physical" ? "location" : "online-info")
+          }
+        />
+      )}
 
       {step === "calendar" && selectedService && (
-        <Calendar service={selectedService.name} duration={selectedService.duration} onBook={handleBooking} />
+        <Calendar
+          service={selectedService.name}
+          duration={selectedService.duration}
+          onBook={handleBooking}
+          onBack={() => setStep("details")}
+        />
       )}
 
       {step === "confirmed" && selectedService && (
